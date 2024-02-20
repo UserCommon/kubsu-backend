@@ -20,7 +20,7 @@ def validate(data: dict) -> dict:
 
     # Validate name
     if not data.get("name") or not re.match(
-        "^[A-Z][a-z]+(\\s[A-Z][a-z]+){1,2}$", data["name"]
+        "^[A-ZА-Я][a-zа-я]+(\\s[A-ZА-Я][a-zа-я]+){1,2}$", data["name"]
     ):
         errors["name"] = "Invalid name"
 
