@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+  
+<body>
+    <section style="">
+        <div class="content-block flex-item-3" style="margin: auto; margin-top: 2%;" id="form">
+            <h2>Форма</h2>
+            <form method="post" action="/">
+                <label for="name">ФИО:</label><br>
+                <input type="text" id="name" name="name", value="{{ data.name }}" class="{% if 'name' in errors%} wrong {% endif %}"><br>
+                {% if 'name' in errors %}
+                    <div class="error">
+                        {{ errors.name }}
+                    </div>
+                {% endif %}
+                <label for="number">Телефон:</label><br>
+                <input type="tel" id="number" name="number" value="{{ data.number }}" class="{% if 'number' in errors%} wrong {% endif %}"><br>
+                {% if 'number' in errors %}
+                    <div class="error">
+                        {{ errors.number }}
+                    </div>
+                {% endif %}
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" value="{{ data.email }}"  class="{% if 'email' in errors%} wrong {% endif %}"><br>
+                {% if 'email' in errors %}
+                    <div class="error">
+                        {{ errors.email }}
+                    </div>
+                {% endif %}
+                <label for="birthday" name="birthday" value="{{ data.birthday }}">День рождения:</label><br>
+                <input type="date" id="birthday" name="birthday" class="{% if 'birthday' in errors%} wrong {% endif %}"><br>
+                {% if 'birthday' in errors %}
+                    <div class="error">
+                        {{ errors.birthday }}
+                    </div>
+                {% endif %}
+                <label>Пол:</label><br>
+                <input type="radio" name="sex" class="{% if 'bio' in errors%} wrong {% endif %}">Муж.<br>
+                <input type="radio" name="sex" class="{% if 'bio' in errors%} wrong {% endif %}">Жен.<br>
+                {% if 'sex' in errors %}
+                    <div class="error">
+                        {{ errors.sex }}
+                    </div>
+                {% endif %}
+                <select name="fav_lang">
+                    <option value="c++">C++</option>
+                    <option value="rust">Rust</option>
+                    <option value="haskell">Haskell</option>
+                    <option value="python">Python</option>
+                    <option value="elixir">Elixir</option>
+                    <option value="scala">Scala</option>
+                </select><br>
+                {% if 'fav_lang' in errors %}
+                    <div class="error">
+                        {{ errors.fav_lang }}
+                    </div>
+                {% endif %}
+                <label for="bio">Биография:</label><br>
+                <textarea name="bio" cols="30" rows="10" id="bio" class="{% if 'bio' in errors%} wrong {% endif %}"></textarea><br>
+                {% if 'bio' in errors %}
+                    <div class="error">
+                        {{ errors.bio }}
+                    </div>
+                {% endif %}
+                <label for="agreement">
+                    с контрактом ознакомлен(а)
+                </label><br>
+                <input type="checkbox" name="agreement" id="agreement"><br>
+
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+        </div>
+        <div class="result ft">
+            {% if user is defined %}
+            <div class="success" style="flex">
+                username: {{user.username}}
+                password: {{user.password}}
+            </div>
+            {% endif %}
+        </div>
+    </section>
+</body>
+
+</html>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+.ft {
+    position: absolute;
+    bottom: 0px;
+}
+
+* {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    color: #0F0A0A;
+}
+
+.success {
+    background-color: #008000;
+}
+
+body {
+    background-color: #F5EFED;
+}
+
+.header {
+    background-color: #F26419;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    min-height: 80px;
+    
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 2vw;
+}
+
+.name {
+    font-size: xx-large;
+    display: inline;
+}
+
+
+.footer {
+    width: 100vw;
+    background-color: #F26419;
+}
+
+.flex-box {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+
+    gap: 3vh;
+    align-items: center;
+}
+
+.content-block {
+    background-color: #7CB518;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70vw;
+    border-radius: 10px;
+    padding: 3%;
+}
+
+.even {
+    background-color: burlywood;
+}
+
+.odd {
+    background-color: coral;
+}
+
+.links {
+    font-size: x-large;
+}
+
+.menu-links li{
+    display: block;
+
+    list-style-type: none;
+    font-size: x-large;
+}
+
+.flex-item-2 {
+    order: 1;
+}
+
+.flex-item-1 {
+    order: 2;
+}
+
+.flex-item-3 {
+    order: 3;
+}
+
+.header-super-item-1 {
+    width: 70vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1vh;
+}
+
+@media screen and (min-width: 960px) {
+    .header-super-item-1 {
+        all: unset;
+    }
+
+    .flex-item-2 {
+        order: 2;
+    }
+
+    .flex-item-1 {
+        order: 1;
+    }
+
+    .flex-item-3 {
+        order: 3;
+    }
+    
+
+    .header {
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .menu-links li{
+        display: inline;
+    }
+
+    .links {
+        font-size: medium;
+    }
+    
+    
+    
+    .page-nav {
+        display: inline;
+        float: right;
+        font-size: x-large;
+    }
+    
+    
+    
+    .copyright {
+        padding-top: 1%;
+        padding-left: 1%;
+    }
+    
+    
+    .footer {
+        min-height: 60px;
+    }
+
+    .error {
+        background-color: red;
+    }
+
+    .wrong {
+        border: 2px solid red;
+    }
+    
+}
+</style>
