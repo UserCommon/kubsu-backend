@@ -37,29 +37,41 @@ class HttpProcessor(BaseHTTPRequestHandler):
         self.send_cors_headers()
         self.end_headers()
 
-    def login_page_post(self, cursor, cnx):
-        pass
-
     def do_POST(self):
         cnx = mysql.connector.connect(**MYSQL_CONFIG)
         cursor = cnx.cursor()
+
+        list_id_match = re.match(r"^/list/(\d+)/?$", self.path)
         match self.path:
             case "/":
                 FormCRUD.form_page_post(self, cursor, cnx, env)
             case "/login" | "/login/":
                 FormCRUD.login_page_post(self, cursor, cnx, env)
-
+            case _ if list_id_match:
+                Id = list_id_match.group(1)
+                FormCRUD.form_page_update(self, cursor, cnx, env, Id)
         cursor.close()
         cnx.close()
 
 
     def do_GET(self):
+        cnx = mysql.connector.connect(**MYSQL_CONFIG)
+        cursor = cnx.cursor()
+        list_id_match = re.match(r"^/list/(\d+)/?$", self.path)
+
         match self.path:
             case "/":
-                FormCRUD.form_page_get(self, env)
+                FormCRUD.form_page_get(self, cursor, cnx, env)
             case "/login" | "/login/":
                 FormCRUD.login_page_get(self, env)
+            case "/list" | "/list/":
+                FormCRUD.form_list_get(self, cursor, cnx, env)
+            case _ if list_id_match:
+                Id = list_id_match.group(1)
+                FormCRUD.form_page_get_exact(self, cursor, cnx, env, Id)
 
+        cursor.close()
+        cnx.close()
 
 
 # Set up the server

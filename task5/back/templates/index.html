@@ -11,7 +11,7 @@
     <section style="">
         <div class="content-block flex-item-3" style="margin: auto; margin-top: 2%;" id="form">
             <h2>Форма</h2>
-            <form method="post" action="/">
+            <form method="post" action="{{ path }}">
                 <label for="name">ФИО:</label><br>
                 <input type="text" id="name" name="name", value="{{ data.name }}" class="{% if 'name' in errors%} wrong {% endif %}"><br>
                 {% if 'name' in errors %}

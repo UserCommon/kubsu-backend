@@ -9,10 +9,11 @@ in pkgs.mkShell {
     export database=my_db
   '';
   packages = [
-    (pkgs.python3.withPackages (python-pkgs: [
-      python-pkgs.jinja2
-      python-pkgs.mysql-connector
-      python-pkgs.bcrypt
+    (pkgs.python3.withPackages (pip: [
+      pip.jinja2
+      pip.mysql-connector
+      pip.bcrypt
+      pip.bson
     ]))
   ];
 }

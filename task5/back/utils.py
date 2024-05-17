@@ -5,8 +5,22 @@ import bcrypt
 from typing import Self
 import string
 import secrets
+from datetime import datetime
 from abc import ABC, abstractmethod
 import mysql.connector
+
+from dataclasses import dataclass
+
+@dataclass
+class UpdateVariant:
+    id: int
+
+@dataclass
+class CreateVariant:
+    pass
+
+FormVariants = UpdateVariant | CreateVariant
+
 
 class ORM(ABC):
     @abstractmethod
@@ -31,7 +45,6 @@ class FromDict(ABC):
     @abstractmethod
     def from_dict(d):
         pass
-
 
 class Validatable(ABC):
     """Trait for all validatable objects"""
@@ -74,7 +87,7 @@ class UserORM(ORM):
             (self.user.username,)
         )
 
-        return self.cursor.fetchone()
+        return self.cursor.fetchone()[0]
 
 
 class FormORM(ORM):
@@ -110,6 +123,47 @@ class FormORM(ORM):
             )
         )
         self.cnx.commit()
+
+    def update_db(self, application_id):
+        query = """
+            UPDATE application
+            SET name = %s,
+                phone = %s,
+                email = %s,
+                birthday = %s,
+                sex = %s,
+                fav_lang = %s,
+                bio = %s
+            WHERE
+                id = %s
+        """
+        form = self.form
+        self.cursor.execute(
+            query,
+            (
+                form.name,
+                form.number,
+                form.email,
+                form.birthday,
+                form.sex,
+                form.fav_lang,
+                form.bio,
+                application_id
+            )
+        )
+        self.cnx.commit()
+
+    def get_by_id(self, rec_id):
+        query = """
+            SELECT * from application
+            WHERE id = %s
+        """
+
+        self.cursor.execute(query, (rec_id,))
+
+        res = self.cursor.fetchone()
+        print(res)
+        return Form.from_unwrappable(res[1:2] + res[3:] + (True, ))
 
     def get_id(self, user_id):
         query = f"""
@@ -203,6 +257,10 @@ class Form(ToDict, FromDict, Validatable):
     def from_dict(self, d):
         return Form(**d)
 
+    @classmethod
+    def from_unwrappable(self, u):
+        return Form(*u)
+
     def validate(data) -> dict:
         """Validate"""
         errors = {}
@@ -236,4 +294,13 @@ class Form(ToDict, FromDict, Validatable):
         if not data.get("bio"):
             errors["bio"] = "Bio is required"
 
+        if not data.get("birthday"):
+            errors["birthday"] = "Birthday is required"
+        else:
+            try:
+                birthday = datetime.strptime(data["birthday"], "%Y-%m-%d")
+                if birthday > datetime.now():
+                    errors["birthday"] = "Birthday cannot be in the future"
+            except ValueError:
+                errors["birthday"] = "Invalid birthday format, must be YYYY-MM-DD"
         return errors
