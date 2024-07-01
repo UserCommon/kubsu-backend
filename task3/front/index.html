@@ -9,46 +9,54 @@
 </head>
 
 <body>
-    <section style="">
-        <div class="content-block flex-item-3" style="margin: auto; margin-top: 2%;" id="form">
+    <section>
+        <div class="content-block flex-item-3" id="form">
             <h2>Форма</h2>
-            <form action="/ " method="post">
-                <label for="name">ФИО:</label><br>
-                <input type="text" id="name" name="name"><br>
-                <label for="number">Телефон:</label><br>
-                <input type="tel" id="number" name="number"><br>
-                <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email"><br>
-                <label for="birthday" name="birthday">День рождения:</label><br>
-                <input type="date" id="birthday" name="birthday"><br>
-                <label>Пол:</label><br>
-                <input type="radio" name="sex">Муж.<br>
-                <input type="radio" name="sex">Жен.<br>
-                <select name="fav_lang">
+            <form action="/" method="post">
+                <label for="name">ФИО:</label>
+                <input type="text" id="name" name="name">
+
+                <label for="number">Телефон:</label>
+                <input type="tel" id="number" name="number">
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+
+                <label for="birthday">День рождения:</label>
+                <input type="date" id="birthday" name="birthday">
+
+                <fieldset>
+                    <legend>Пол:</legend>
+                    <input type="radio" name="sex" id="male"><label for="male">Муж.</label><br>
+                    <input type="radio" name="sex" id="female"><label for="female">Жен.</label>
+                </fieldset>
+
+                <label for="fav_lang">Любимый язык программирования:</label>
+                <select name="fav_lang" id="fav_lang">
                     <option value="c++">C++</option>
                     <option value="rust">Rust</option>
                     <option value="haskell">Haskell</option>
                     <option value="python">Python</option>
                     <option value="elixir">Elixir</option>
                     <option value="scala">Scala</option>
-                </select><br>
-                <label for="bio">Биография:</label><br>
-                <textarea name="bio" cols="30" rows="10" id="bio">
+                </select>
 
-                </textarea><br>
+                <label for="bio">Биография:</label>
+                <textarea name="bio" cols="30" rows="10" id="bio"></textarea>
+
                 <label for="agreement">
-                    с контрактом ознакомлен(а)
-                </label><br>
-                <input type="checkbox" name="agreement" id="agreement"><br>
+                    <input type="checkbox" name="agreement" id="agreement"> с контрактом ознакомлен(а)
+                </label>
+
                 <button type="submit">Сохранить</button>
             </form>
-        </div>
         </div>
         <div id="result"></div>
     </section>
 </body>
 
 </html>
+
 
 <script>
     //let url = `${window.location.protocol}://${window.location.host}:${window.location.port}/back/`;
