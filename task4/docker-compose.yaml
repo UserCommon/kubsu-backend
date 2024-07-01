@@ -1,7 +1,7 @@
 version: "3"
 services:
   db:
-    image: mariadb:latest
+    image: mariadb:10.4
     command: --init-file /docker-entry-point-initdb.d/db.sql
     restart: always
     environment:
